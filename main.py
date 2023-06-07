@@ -46,7 +46,10 @@ async def get_current_day(callback: types.CallbackQuery, state: FSMContext):
     data = await state.get_data()
     city = data.get('city')
     await bot.delete_message(chat_id=callback.from_user.id, message_id=callback.message.message_id)
-    await callback.message.answer(Weather.start_weather_current(city), reply_markup=kb.menu_forecast)
+    try:
+        await callback.message.answer(Weather.start_weather_current(city), reply_markup=kb.menu_forecast)
+    except Exception:
+        await callback.message.answer('Что-то пошло не так...', reply_markup=kb.back_button)
 
 
 @dp.callback_query(Text('all_day'), States.request_city)
@@ -54,7 +57,10 @@ async def get_all_day(callback: types.CallbackQuery, state: FSMContext):
     data = await state.get_data()
     city = data.get('city')
     await bot.delete_message(chat_id=callback.from_user.id, message_id=callback.message.message_id)
-    await callback.message.answer(Weather.start_weather_forecast(city), reply_markup=kb.menu_forecast)
+    try:
+        await callback.message.answer(Weather.start_weather_forecast(city), reply_markup=kb.menu_forecast)
+    except Exception:
+        await callback.message.answer('Что-то пошло не так...', reply_markup=kb.back_button)
 
 
 @dp.callback_query(Text('three_days'), States.request_city)
@@ -62,7 +68,10 @@ async def get_three_day(callback: types.CallbackQuery, state: FSMContext):
     data = await state.get_data()
     city = data.get('city')
     await bot.delete_message(chat_id=callback.from_user.id, message_id=callback.message.message_id)
-    await callback.message.answer(Weather.start_weather_three_days(city), reply_markup=kb.menu_forecast)
+    try:
+        await callback.message.answer(Weather.start_weather_three_days(city), reply_markup=kb.menu_forecast)
+    except Exception:
+        await callback.message.answer('Что-то пошло не так...', reply_markup=kb.back_button)
 
 
 @dp.callback_query(Text('cancel'))
